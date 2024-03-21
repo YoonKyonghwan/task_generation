@@ -22,6 +22,22 @@ def generate_available_period_list(min_period: int, max_period: int, sample_list
     
     return period_list
 
+def get_min_period(testset: list) -> int:
+    min_period = max_period
+    for tuple in testset:
+        period = tuple[1]
+        if(period < min_period):
+            min_period = period
+    return min_period
+
+def set_nice_value_by_deadline(period: int, min_period: int):
+    nice_value = -19
+    period_inc = min_period
+    while(period_inc > period and nice_value < 19):
+        period_inc = (period_inc * 5) / 4
+        nice_value += 1
+    return nice_value
+
 def generate_json_file(testset_list: list, dirname: str, filename_prefix): 
     json_object = {}
     index = 0
@@ -40,6 +56,7 @@ def generate_json_file(testset_list: list, dirname: str, filename_prefix):
         mapping_info_dict = {}
         mapping_info_dict['coreID'] = 1
         mapping_info_dict['tasks'] = []
+        min_period_in_testset = get_min_period(testset)
         
         for idx, tuple in enumerate(testset):
             task_info_dict = {}
@@ -50,7 +67,7 @@ def generate_json_file(testset_list: list, dirname: str, filename_prefix):
             task_info_dict['readTime'] = 0.0
             task_info_dict['bodyTime'] = exec_time
             task_info_dict['writeTime'] = 0.0
-            task_info_dict['nice'] = 0
+            task_info_dict['nice'] = set_nice_value_by_deadline(period=period, min_period=min_period_in_testset)
             task_info_dict['period'] = period
             task_info_dict['initialPriority'] = -1
             task_info_dict['index'] = idx
@@ -64,7 +81,7 @@ def generate_json_file(testset_list: list, dirname: str, filename_prefix):
             
 
 # num_cores = [1] # not used
-generated_files_save_dir="../generated_taskset_new"
+generated_files_save_dir="../generated_taskset_new2"
 num_tasks = [3, 6, 9, 12]
 utilizations = [0.2, 0.4, 0.6]
 num_sets = 50
