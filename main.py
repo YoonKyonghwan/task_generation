@@ -33,7 +33,7 @@ def get_min_period(testset: list) -> int:
 def set_nice_value_by_deadline(period: int, min_period: int):
     nice_value = -19
     period_inc = min_period
-    while(period_inc > period and nice_value < 19):
+    while(period_inc < period and nice_value < 19):
         period_inc = (period_inc * 5) / 4
         nice_value += 1
     return nice_value
