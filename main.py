@@ -84,8 +84,8 @@ def generate_json_file(testset_list: list, dirname: str, filename_prefix):
 if __name__ == "__main__":
     # num_cores = [1] # not used
     parser = argparse.ArgumentParser()
-    parser.add_argument("-g", "--generated_files_save_dir", type=str, default="generated_tasksets", help="Directory to save generated tasksets")
-    parser.add_argument("-n", "--num_tasksets", type=int, default=3, help="Number of tasks in a taskset")
+    parser.add_argument("-g", "--generated_files_save_dir", type=str, default="generated_taskset_even_3", help="Directory to save generated tasksets")
+    parser.add_argument("-n", "--num_tasksets", type=int, default=100, help="Number of tasks in a taskset")
     parser.add_argument("--min_period", type=int, default=30000, help="Minimum period of tasks(us)")
     parser.add_argument("--max_period", type=int, default=1000000, help="Maximum period of tasks(us)")
     args = parser.parse_args()
@@ -93,8 +93,10 @@ if __name__ == "__main__":
     num_sets = args.num_tasksets
     min_period = args.min_period
     max_period = args.max_period
-    num_tasks = [3, 6, 9, 12]
-    utilizations = [0.4, 0.6, 0.8]
+    num_tasks = [2, 4, 6, 8, 10]
+    # num_tasks = [3, 6, 9, 12]
+    utilizations = [0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
+
 
     available_period_list = generate_available_period_list(min_period, max_period)
 
